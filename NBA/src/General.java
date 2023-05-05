@@ -109,9 +109,9 @@ public class General {
 		String[] v_stringLine;
 		ArrayList<Jogador> v_arrayOfJogadores = new ArrayList<>();
 		
-		
 		try {
-			File v_file = new File("/tmp/jogadores.txt");
+			//File v_file = new File("/tmp/jogadores.txt");
+			File v_file = new File("jogadores.txt");
 			Scanner v_in = new Scanner(v_file);
 			String v_line = v_in.nextLine();
             while (v_in.hasNextLine())
@@ -135,11 +135,11 @@ public class General {
 	}
 	
 	public static void main(String[] args) {
-		MyIO.setCharset("UTF-8");
+		Scanner v_in = new Scanner(System.in);
 		String v_line;
 		ArrayList<Jogador> v_arrayOfJogadores = new ArrayList<>();
 		v_arrayOfJogadores = ler();
-		v_line = MyIO.readLine();
+		v_line = v_in.nextLine();
 		while(!v_line.equals("FIM")) {
 			for(Jogador t_jogador : v_arrayOfJogadores) {
 		        if(t_jogador.getId() == Integer.parseInt(v_line))
@@ -148,8 +148,9 @@ public class General {
 		        	break;
 		        }
 			}
-			v_line = MyIO.readLine();
+			v_line = v_in.nextLine();
 		}
+		v_in.close();
 	}
 
 }
