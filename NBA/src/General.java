@@ -103,95 +103,6 @@ class Jogador {
 	}
 }
 
-class Celula {
-	
-}
-
-class Fila_Vetor {
-	
-}
-
-class Fila_Dinamica {
-	
-}
-
-class Pilha_Vetor {
-	
-	private Jogador m_pilha[];
-	private int m_topo;
-	
-	public Pilha_Vetor() {
-		m_pilha = new Jogador[5]; //Tamanho padrão
-		m_topo = 0;
-	}
-	
-	public Pilha_Vetor(int p_tamanho) {
-		
-		m_pilha = new Jogador[p_tamanho];
-		m_topo = 0;
-	}
-	
-	public boolean IsEmpty() {
-		
-		if(m_topo == 0)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	public boolean IsFull() {
-		
-		if(m_topo == m_pilha.length)
-		{
-			return true;
-		}
-		return false;
-	}
-	
-	public void Empilhar(Jogador p_newjogador) throws Exception{
-		
-		if(!this.IsFull())
-		{
-			m_pilha[m_topo] = p_newjogador;
-			m_topo++;
-		}else
-		{
-			throw new Exception("Não foi possível empilhar: pilha cheia!");
-		}
-		
-	}
-	
-	public Jogador Desempilhar() throws Exception{
-		
-		if (! this.IsEmpty()) {
-			return (m_pilha[m_topo-1]);
-		} else
-			throw new Exception("Não há elementos na pilha");
-	}
-	
-	public void Mostrar() {
-		
-	}
-	
-}
-
-class Pilha_Dinamica {
-	
-	void empilhar(Jogador p_jogador) {
-		
-	}
-	
-	Jogador desempilhar() {
-		
-	}
-	
-	void mostrar() {
-		
-	}
-	
-}
-
 
 public class General {
 
@@ -229,42 +140,7 @@ public class General {
 		Scanner v_in = new Scanner(System.in);
 		String v_line;
 		ArrayList<Jogador> v_arrayOfJogadores = new ArrayList<>();
-		Pilha_Vetor v_pilha = new Pilha_Vetor(10000);
 		v_arrayOfJogadores = ler();
-		v_line = v_in.nextLine();
-		
-		while(!v_line.equals("FIM")) {
-			for(Jogador t_jogador : v_arrayOfJogadores) {
-		        if(t_jogador.getId() == Integer.parseInt(v_line))
-		        {
-		        	v_pilha.Empilhar(t_jogador);
-		        	//System.out.println(t_jogador.Imprimir());
-		        	break;
-		        }
-			}
-			v_line = v_in.nextLine();
-		}
-		int t_insertLines = Integer.parseInt(v_line);
-		
-		
-		for(int i = 0; i >= t_insertLines - 1; i++)
-		{
-			v_line = v_in.nextLine();
-			if(v_line.startsWith("I"))
-			{
-				for(Jogador t_jogador : v_arrayOfJogadores) {
-					if(t_jogador.getId() == Integer.parseInt(v_line))
-					{
-						v_pilha.Empilhar(t_jogador);
-						break;
-					}
-				}
-			}else if(v_line.startsWith("R"))
-			{
-				v_pilha.Desempilhar();
-			}
-			
-		}
 		v_in.close();
 	}
 
