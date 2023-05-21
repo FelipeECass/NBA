@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 class Jogador {
 	
@@ -112,8 +115,8 @@ public class General {
 		ArrayList<Jogador> v_arrayOfJogadores = new ArrayList<>();
 		
 		try {
-			//File v_file = new File("/tmp/jogadores.txt"); //Para o Verde
-			File v_file = new File("jogadores.txt");
+			File v_file = new File("/tmp/jogadores.txt"); //Para o Verde
+			//File v_file = new File("jogadores.txt");
 			Scanner v_in = new Scanner(v_file);
 			String v_line = v_in.nextLine();
             while (v_in.hasNextLine())
@@ -136,12 +139,99 @@ public class General {
 		return v_arrayOfJogadores;
 	}
 	
+	private static void bubbleSort(ArrayList<Jogador> p_arrayOfJogadores, ArrayList<Integer> p_arrayBubble, int n) throws IOException {
+		int v_comp = 0;
+		int v_trocas = 0;
+		long startTime = System.currentTimeMillis();
+		for (int i = (n - 1); i > 0; i--) {
+			for (int j = 0; j < i; j++) {
+				if(p_arrayOfJogadores.get(p_arrayBubble.get(j)).getCidadeNascimento() != null &&
+						p_arrayOfJogadores.get(p_arrayBubble.get(j+1)).getCidadeNascimento() != null)
+				{
+					if(p_arrayOfJogadores.get(p_arrayBubble.get(j)).getCidadeNascimento().compareTo(p_arrayOfJogadores.get(p_arrayBubble.get(j+1)).getCidadeNascimento()) > 0) 
+					{  			
+						int temp = p_arrayBubble.get(j);
+						p_arrayBubble.set(j, p_arrayBubble.get(j+1));
+						p_arrayBubble.set(j+1, temp);
+						v_trocas++;
+					}
+					else if(p_arrayOfJogadores.get(p_arrayBubble.get(j)).getCidadeNascimento().compareTo(p_arrayOfJogadores.get(p_arrayBubble.get(j+1)).getCidadeNascimento()) == 0)
+					{
+						if(p_arrayOfJogadores.get(p_arrayBubble.get(j)).getNome().compareTo(p_arrayOfJogadores.get(p_arrayBubble.get(j+1)).getNome()) > 0) 
+						{  			
+							int temp = p_arrayBubble.get(j);
+							p_arrayBubble.set(j, p_arrayBubble.get(j+1));
+							p_arrayBubble.set(j+1, temp);
+							v_trocas++;
+						}	
+						v_comp++;
+					}
+					v_comp+=2;
+				}
+				else
+				{
+					if(p_arrayOfJogadores.get(p_arrayBubble.get(j)).getCidadeNascimento() == null &&
+							p_arrayOfJogadores.get(p_arrayBubble.get(j+1)).getCidadeNascimento() == null)
+					{
+						v_comp++;
+						if(p_arrayOfJogadores.get(p_arrayBubble.get(j)).getNome().compareTo(p_arrayOfJogadores.get(p_arrayBubble.get(j+1)).getNome()) > 0) 
+						{  			
+							int temp = p_arrayBubble.get(j);
+							p_arrayBubble.set(j, p_arrayBubble.get(j+1));
+							p_arrayBubble.set(j+1, temp);
+							v_trocas++;
+						}	
+					}
+					else if(p_arrayOfJogadores.get(p_arrayBubble.get(j)).getCidadeNascimento() == null &&
+							p_arrayOfJogadores.get(p_arrayBubble.get(j+1)).getCidadeNascimento() != null) {
+						int temp = p_arrayBubble.get(j);
+						p_arrayBubble.set(j, p_arrayBubble.get(j+1));
+						p_arrayBubble.set(j+1, temp);
+						v_trocas++;
+					}
+				}
+			}
+		}
+		FileWriter v_file = new FileWriter("790430.txt");
+	    PrintWriter v_log = new PrintWriter(v_file);
+		long endTime = System.currentTimeMillis();
+		long timeElapsed = endTime - startTime;
+		v_log.printf("790430");
+		v_log.printf("\tTempo de execução(ms):" + timeElapsed);
+		v_log.printf("\tComparações feitas:" + v_comp);
+		v_log.printf("\tTrocas feitas:" + v_trocas);
+		
+		v_log.close();
+		v_file.close();
+		for (int i = 0; i<n; i++)
+		{
+			System.out.println(p_arrayOfJogadores.get(p_arrayBubble.get(i)).Imprimir());
+		}
+		
+	}
+
+	
 	public static void main(String[] args) throws Exception{
 		Scanner v_in = new Scanner(System.in);
 		String v_line;
 		ArrayList<Jogador> v_arrayOfJogadores = new ArrayList<>();
 		v_arrayOfJogadores = ler();
+		ArrayList<Integer> v_arrayBubble = new ArrayList<>();
+		int v_countLines = 0;
+		
+		v_line = v_in.nextLine();
+		while(!v_line.equals("FIM"))
+		{
+			v_arrayBubble.add(Integer.parseInt(v_line));
+			v_line = v_in.nextLine();
+			v_countLines++;
+		}
 		v_in.close();
+		
+		
+		bubbleSort(v_arrayOfJogadores, v_arrayBubble, v_countLines);
+		
+		
 	}
 
 }
